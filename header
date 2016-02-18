@@ -28,5 +28,5 @@ if [ $indice = 0 ];then
     echo "Field << $column >> does not exists : please verify and retry"
 else
     res=`cut -d";" -f $indice $fileName `
-    echo $res
+    printf '%s\n' $res
 fi
