@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Ce script permet de lister une colonne d'un fichier (table ...)
+# A ce stade il ne fonctionne qu'avec ; comme séparateur
+# $1 File name
+# $2 Field name
+
+
+fileName=$1
+column=$2
+line=$(head -n 1 $fileName)
+IFS=';' read -a array <<< "$line"
+
+
+count=0
+indice=0
+for i in "${array[@]}"
+do
+    count=$((count+1))
+        if [ $i = $column ]
+         then
+            indice=$count
+  	   fi
+        
+done
+
+if [ $indice = 0 ];then
+    echo "Field << $column >> does not exists : please verify and retry"
+else
+    res=`cut -d";" -f $indice $fileName `
+    echo $res
+fi
