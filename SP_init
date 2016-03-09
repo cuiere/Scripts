@@ -1,0 +1,54 @@
+<!-- Snowplow starts plowing -->
+<script type="text/javascript">
+;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","//d34fy04abkfw5.cloudfront.net/jslib/sp.js","snowplow"));
+
+  window.snowplow('xxx', 'xxx', 'x.x.x.x', { // Initialise a tracker  
+  appId: 'xxx_web',
+  cookieName: "xx",
+  respectDoNotTrack: true,
+  cookieDomain: null
+});
+
+
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
+
+var urlLogin = get('_clx')
+//var appNexus = '&adnxs_uid=$UID'
+ var appNexus = '$USER_AGENT_ID'
+var spLogin = ''
+
+if (typeof urlLogin !== 'undefined') {
+       spLogin = urlLogin
+}
+if (typeof jsLogin !== 'undefined') { // convention: jsLogin will only be defined on the first page after log in
+    if (jsLogin != '')
+        spLogin = jsLogin
+}
+  
+    if (spLogin == '')
+        spLogin = ''
+
+  
+window.snowplow('setUserId', spLogin);
+window.snowplow('trackPageView');
+  
+  
+window.snowplow('trackStructEvent', 'xxx', 'xxx', 'xxx', 'xxx',0);  
+window.snowplow('trackUnstructEvent', {
+    schema: 'iglu:iglucentral.com/schemas/com.snowplowanalytics.snowplow/screen_view/jsonschema/1-0-0',
+    data: {
+        name: "testName",
+        id: "testid"
+   }
+});
+  
+  
+  
+</script>
+<!-- Snowplow stops plowing -->
