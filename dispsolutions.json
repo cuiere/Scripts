@@ -1,0 +1,87 @@
+GET dispsolutions-2018.10.11/_search?pretty  
+{   "query":{
+      "bool":{  
+         "must":[  
+            {  
+               "match":{  
+                  "zone":"paris"
+               }
+            },
+            {  
+               "match":{  
+                  "env":"prod"
+               }
+            },
+            {  
+               "nested":{  
+                  "path":"jobs",
+                  "query":{  
+                     "bool":{  
+                        "must":[  
+                           {  
+                              "match":{  
+                                 "jobs.confirmed":true
+                              }
+                           }
+                        ]
+                     }
+                  },
+                  "inner_hits":{  
+
+                  }
+               }
+            }
+         ]
+      }
+   }
+   ,
+"aggs":{  
+      "all_in_city":{  
+         "terms":{  
+            "field":"zone"
+         },
+         "aggs":{  
+            "driver_jobs":{  
+               "nested":{  
+                  "path":"jobs"
+               },
+               "aggs":{  
+                  "jobs":{  
+                     "terms":{  
+                        "field":"jobs.jobId"
+                     },
+                     "aggs":{  
+                        "drivers":{  
+                           "terms":{  
+                              "field":"jobs.driver",
+                              "size": 10
+                           },
+                           "aggs": {
+                             "min_doETA": {
+                               "min": {
+                                 "field": "jobs.dropoff.latitude"
+                               }
+                             }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "sort":[  
+      {  
+         "@timestamp":{  
+            "order":"desc"
+         }
+      }
+   ],
+   "_source":[  
+      "@timestamp",
+      "env",
+      "zone"
+   ],
+   "size":0
+}
