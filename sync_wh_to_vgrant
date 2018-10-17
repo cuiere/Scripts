@@ -1,0 +1,2 @@
+watchmedo shell-command . -c 'rsync -av --rsync-path="sudo -u airflow rsync" --exclude .git --exclude env --exclude __pycache__ --exclude .idea . vagrant-warehouse:/var/lib/airflow/dags/'
+

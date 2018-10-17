@@ -1,0 +1,1 @@
+mysql --host=xxx.eu-central-1.rds.amazonaws.com --password=xxx  --user=xxx -D xxxx -e "" | tr '\t' ';' > xxx.csv

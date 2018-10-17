@@ -1,0 +1,1 @@
+pgcli -h bi.redshift.beta.eu-west-1.stuart -U stuart -p 5439 -d "vagrant_new_warehouse_saph"
